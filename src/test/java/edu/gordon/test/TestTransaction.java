@@ -52,46 +52,5 @@ public class TestTransaction {
 		//infoCompte = new AccountInformation();
 	}
 	
-	@Test
-	public void performWithdrawal() throws Cancelled, CardRetained{
-	/*	transaction.getState(0);
-		transaction.performTransaction();*/
-		atm.setCustomerConsole(display);
-		atm.setCashDispenser(new ICashDispenser() {
-			
-			public void setInitialCash(Money initialCash) {}
-			
-			public void dispenseCash(Money amount) {}
-			
-			public boolean checkCashOnHand(Money amount) {
-				
-				return true;
-			}
-		});
-		
-		String[] testMenu = new String[4];
-			testMenu[0]="Withdrawal";
-			testMenu[1]="Deposit";
-			testMenu[2]="Transfer";
-			testMenu[3]="Balance Inquiry";
-			
-		display.setReadInputCallback(new ReadInputCallback(){
-			public String readInputCallbackReceived(int mode, int maxValue) {
-				return "1";
-			}
-		});
-				
-		display.readMenuChoice("TestPrompt", testMenu);
-		
-		
-		
-		//retrait = transaction.makeTransaction(atm, session, carte, 456);
-		transaction  = transaction.makeTransaction(atm, session, carte, 456);System.out.println("yep yep");
-		//transaction.completeTransaction();
-		//infoCompte.ACCOUNT_NAMES[0]
-		assertTrue(transaction.performTransaction());
-		
-		
-		
-	}
+	
 }

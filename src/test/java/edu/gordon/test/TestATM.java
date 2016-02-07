@@ -20,8 +20,9 @@ public class TestATM {
 	
 	@Test
 	public void switchOn(){
+		atm.switchOn();
 		
-		
+		assertTrue(atm.isSwitchOn());
 	}
 
 }
