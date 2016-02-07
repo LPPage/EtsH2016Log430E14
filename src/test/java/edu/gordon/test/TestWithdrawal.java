@@ -1,14 +1,12 @@
 package edu.gordon.test;
 
 import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertTrue;
 
 import edu.gordon.atm.ATM;
-import edu.gordon.atm.transaction.*;
-import edu.gordon.atm.*;
-import edu.gordon.banking.*;
+import edu.gordon.atm.Session;
+import edu.gordon.atm.TransactionFactory;
+import edu.gordon.atm.transaction.Withdrawal;
+import edu.gordon.banking.Card;
 
 public class TestWithdrawal {
 	private Withdrawal retrait;
@@ -19,7 +17,7 @@ public class TestWithdrawal {
 	@Before
 	public void faireAvant(){
 		atm = new ATM(1, "Canada", "FakeBank");
-		session =  new Session(atm);
+		session = new Session(atm.getCardReader(), atm.getCustomerConsole(), new TransactionFactory(atm));
 		carte = new Card(123456);
 		retrait = new Withdrawal(atm, session, carte, 430);
 	}

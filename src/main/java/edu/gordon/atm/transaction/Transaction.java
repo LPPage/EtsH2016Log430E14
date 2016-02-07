@@ -7,7 +7,7 @@
  
 package edu.gordon.atm.transaction;
 
-import edu.gordon.atm.exception.Cancelled;
+import edu.gordon.atm.common.Cancelled;
 import edu.gordon.banking.Balances;
 import edu.gordon.banking.Card;
 import edu.gordon.banking.Message;
@@ -37,49 +37,6 @@ public abstract class Transaction
         this.balances = new Balances();
         
         state = GETTING_SPECIFICS_STATE;
-    }
-         
-    /** Create a transaction of an appropriate type by asking the customer
-     *  what type of transaction is desired and then returning a newly-created
-     *  member of the appropriate subclass
-     *
-     *  @param edu.gordon.atm the ATM used to communicate with customer
-     *  @param session the session in which this transaction is being performed
-     *  @param card the customer's card
-     *  @param pin the PIN entered by the customer
-     *  @return a newly created Transaction object of the appropriate type
-     *  @exception ICustomerConsole.Cancelled if the customer presses cancel instead
-     *         of choosing a transaction type
-     */
-    public static Transaction makeTransaction(IATM atm, ISession session,
-                                              Card card, int pin)
-                                throws Cancelled              
-    {
-        int choice = atm.getCustomerConsole().readMenuChoice(
-                "Please choose transaction type", TRANSACTION_TYPES_MENU);
-                
-        switch(choice)
-        {
-            case 0:
-            
-                return new Withdrawal(atm, session, card, pin);
-                
-            case 1:
-
-            	return new Deposit(atm, session, card, pin);
-                
-            case 2:
-            
-                return new Transfer(atm, session, card, pin);
-                
-            case 3:
-            
-                return new Inquiry(atm, session, card, pin);
-                
-            default:
-            
-                return null;    // To keep compiler happy - should not happen!
-        }
     }
     
     /** Peform a transaction.  This method depends on the three abstract methods
@@ -340,11 +297,6 @@ public abstract class Transaction
     /** Used to return account balances from the bank
      */
     protected Balances balances;
-    
-    /** List of available transaction types to display as a menu
-     */
-    private static final String [] TRANSACTION_TYPES_MENU = 
-        { "Withdrawal", "Deposit", "Transfer", "Balance Inquiry" };
         
     /** Next serial number - used to assign a unique serial number to
      *  each transaction

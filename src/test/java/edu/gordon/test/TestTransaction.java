@@ -1,20 +1,19 @@
 package edu.gordon.test;
 
 import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertTrue;
 
 import edu.gordon.atm.ATM;
+import edu.gordon.atm.Session;
+import edu.gordon.atm.TransactionFactory;
 import edu.gordon.atm.display.Display;
-import edu.gordon.atm.display.Display.ReadInputCallback;
-import edu.gordon.atm.physical.ICashDispenser;
-import edu.gordon.atm.physical.ICustomerConsole;
-import edu.gordon.atm.physical.ICustomerConsole.Cancelled;
-import edu.gordon.atm.transaction.*;
-import edu.gordon.atm.transaction.Transaction.CardRetained;
-import edu.gordon.atm.*;
-import edu.gordon.banking.*;
+import edu.gordon.atm.transaction.Deposit;
+import edu.gordon.atm.transaction.Inquiry;
+import edu.gordon.atm.transaction.Transaction;
+import edu.gordon.atm.transaction.Transfer;
+import edu.gordon.atm.transaction.Withdrawal;
+import edu.gordon.banking.Balances;
+import edu.gordon.banking.Card;
+import edu.gordon.banking.Money;
 
 public class TestTransaction {
 	private Money argentTotal;
@@ -40,7 +39,7 @@ public class TestTransaction {
 			solde.setBalances(argentTotal, argentDisponible);
 		atm = new ATM(1,"Canada", "FakeBank");
 		
-		session = new Session(atm);
+		session = new Session(atm.getCardReader(), atm.getCustomerConsole(), new TransactionFactory(atm));
 		carte = new Card(123456);
 		depot = new Deposit(atm, session, carte, 456);
 		transfert = new Transfer(atm, session, carte, 456);

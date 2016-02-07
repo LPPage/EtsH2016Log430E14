@@ -1,12 +1,11 @@
 package edu.gordon.test;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertTrue;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import edu.gordon.atm.*;
+import edu.gordon.atm.ATM;
 
 public class TestATM {
 	private ATM atm; 
