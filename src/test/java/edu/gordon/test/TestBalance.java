@@ -1,12 +1,12 @@
 package edu.gordon.test;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
-
-import edu.gordon.atm.ATM;
-import edu.gordon.banking.*;
+import edu.gordon.banking.Balances;
+import edu.gordon.banking.Money;
 
 public class TestBalance {
 	private Balances balance;

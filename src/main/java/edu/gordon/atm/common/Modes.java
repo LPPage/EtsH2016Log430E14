@@ -1,4 +1,4 @@
-package edu.gordon.atm;
+package edu.gordon.atm.common;
 
 public abstract class Modes {
     /** Not currently reading input - ignore keys (except CANCEL)

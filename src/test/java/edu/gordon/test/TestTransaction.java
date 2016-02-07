@@ -1,22 +1,31 @@
 package edu.gordon.test;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
-
 import edu.gordon.atm.ATM;
+import edu.gordon.atm.Session;
+import edu.gordon.atm.TransactionFactory;
+import edu.gordon.atm.common.Cancelled;
 import edu.gordon.atm.display.Display;
 import edu.gordon.atm.display.Display.ReadInputCallback;
 import edu.gordon.atm.physical.ICashDispenser;
-import edu.gordon.atm.physical.ICustomerConsole;
 import edu.gordon.atm.physical.INetworkToBank;
 import edu.gordon.atm.physical.IReceiptPrinter;
-import edu.gordon.atm.physical.ICustomerConsole.Cancelled;
-import edu.gordon.atm.transaction.*;
+import edu.gordon.atm.transaction.Deposit;
+import edu.gordon.atm.transaction.Inquiry;
+import edu.gordon.atm.transaction.Transaction;
 import edu.gordon.atm.transaction.Transaction.CardRetained;
-import edu.gordon.atm.*;
-import edu.gordon.banking.*;
+import edu.gordon.atm.transaction.Transfer;
+import edu.gordon.atm.transaction.Withdrawal;
+import edu.gordon.banking.Balances;
+import edu.gordon.banking.Card;
+import edu.gordon.banking.Message;
+import edu.gordon.banking.Money;
+import edu.gordon.banking.Receipt;
+import edu.gordon.banking.Status;
 
 public class TestTransaction {
 	private Money argentTotal;
@@ -42,7 +51,7 @@ public class TestTransaction {
 			solde.setBalances(argentTotal, argentDisponible);
 		atm = new ATM(1,"Canada", "FakeBank");
 		
-		session = new Session(atm);
+		session = new Session(atm.getCardReader(), atm.getCustomerConsole(), new TransactionFactory(atm));
 		carte = new Card(123456);
 		depot = new Deposit(atm, session, carte, 456);
 		transfert = new Transfer(atm, session, carte, 456);
@@ -88,7 +97,9 @@ public class TestTransaction {
 		//TODO comment
 		System.out.println("makeTransaction WILL BE called");
 		
-		transaction  = transaction.makeTransaction(atm, session, carte, 456);System.out.println("yep yep");
+		TransactionFactory transactionFactory = new TransactionFactory(atm);
+		
+		transaction  = transactionFactory.makeTransaction(session, carte, 456);System.out.println("yep yep");
 		
 		//TODO comment
     	System.out.println("B4 assertTrue");

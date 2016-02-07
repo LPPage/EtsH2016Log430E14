@@ -1,12 +1,13 @@
 package edu.gordon.test;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
-
-import edu.gordon.atm.ATM;
-import edu.gordon.banking.*;
+import edu.gordon.banking.Card;
+import edu.gordon.banking.Message;
+import edu.gordon.banking.Money;
 
 public class TestMessage {
 	private Message message;
