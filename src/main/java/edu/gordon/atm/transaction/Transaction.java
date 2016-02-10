@@ -60,21 +60,15 @@ public abstract class Transaction
             switch(state)
             {
                 case GETTING_SPECIFICS_STATE:
-                	 //TODO comment
-                    System.out.println("performTransac***");
+
                     try
                     {   
-                    	//TODO comment
-                    	System.out.println("B4 message");
+
                         message = getSpecificsFromCustomer();
-                        
-                        //TODO comment
-                        System.out.println("After message");
+
                         atm.getCustomerConsole().display("");
                         state = SENDING_TO_BANK_STATE;
-                        
-                        //TOOD
-                        System.out.println("getSpecState FINISH");
+
                     }
                     catch(Cancelled e)
                     {
@@ -142,7 +136,7 @@ public abstract class Transaction
                     break;
                     
                 case PRINTING_RECEIPT_STATE:
-                System.out.println("REDO");
+
                     atm.getReceiptPrinter().printReceipt(receipt);
                     state = ASKING_DO_ANOTHER_STATE;
                     
