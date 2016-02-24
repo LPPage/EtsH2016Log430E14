@@ -5,12 +5,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.eventbus.Subscribe;
+
 import edu.gordon.atm.ATM;
 import edu.gordon.atm.Session;
 import edu.gordon.atm.TransactionFactory;
 import edu.gordon.atm.common.Cancelled;
 import edu.gordon.atm.display.Display;
-import edu.gordon.atm.display.Display.ReadInputCallback;
+import edu.gordon.atm.events.ReadInputEvent;
 import edu.gordon.atm.physical.ICashDispenser;
 import edu.gordon.atm.physical.IEnvelopeAcceptor;
 import edu.gordon.atm.physical.INetworkToBank;
@@ -40,6 +42,8 @@ public class TestOperation {
 	private Inquiry verifierCompte;
 	private Withdrawal retrait;
 	private Transaction transaction;
+	
+	private String nextInput;
 	
 	private Display display;
 	private Message message;
@@ -84,11 +88,7 @@ public class TestOperation {
 			testMenu[2]="Transfer";
 			testMenu[3]="Balance Inquiry";
 			
-		display.setReadInputCallback(new ReadInputCallback(){
-			public String readInputCallbackReceived(int mode, int maxValue) {
-				return "1";
-			}
-		});
+			nextInput="1";
 				
 		display.readMenuChoice("TestPrompt", testMenu);
 
@@ -162,11 +162,7 @@ public class TestOperation {
 			testMenu[2]="Transfer";
 			testMenu[3]="Balance Inquiry";
 			
-		display.setReadInputCallback(new ReadInputCallback(){
-			public String readInputCallbackReceived(int mode, int maxValue) {
-				return "2";
-			}
-		});
+			nextInput="2";
 				
 		display.readMenuChoice("TestPrompt", testMenu);
 		
@@ -224,11 +220,7 @@ public class TestOperation {
 			}
 		});
     	
-    	display.setReadInputCallback(new ReadInputCallback(){
-			public String readInputCallbackReceived(int mode, int maxValue) {
-				return "1";
-			}
-		});
+    	nextInput="1";
     	
     	assertTrue(transaction.performTransaction());
 
@@ -255,11 +247,7 @@ public class TestOperation {
 			testMenu[2]="Transfer";
 			testMenu[3]="Balance Inquiry";
 			
-		display.setReadInputCallback(new ReadInputCallback(){
-			public String readInputCallbackReceived(int mode, int maxValue) {
-				return "3";
-			}
-		});
+			nextInput="3";
 				
 		display.readMenuChoice("TestPrompt", testMenu);
 
@@ -317,11 +305,7 @@ public class TestOperation {
 			}
 		});
     	
-    	display.setReadInputCallback(new ReadInputCallback(){
-			public String readInputCallbackReceived(int mode, int maxValue) {
-				return "1";
-			}
-		});
+    	nextInput="1";
     	
     	assertTrue(transaction.performTransaction());
 
@@ -348,11 +332,7 @@ public class TestOperation {
 			testMenu[2]="Transfer";
 			testMenu[3]="Balance Inquiry";
 			
-		display.setReadInputCallback(new ReadInputCallback(){
-			public String readInputCallbackReceived(int mode, int maxValue) {
-				return "4";
-			}
-		});
+			nextInput="4";
 				
 		display.readMenuChoice("TestPrompt", testMenu);
 
@@ -410,13 +390,14 @@ public class TestOperation {
 			}
 		});
     	
-    	display.setReadInputCallback(new ReadInputCallback(){
-			public String readInputCallbackReceived(int mode, int maxValue) {
-				return "1";
-			}
-		});
+    	nextInput="1";
     	
     	assertTrue(transaction.performTransaction());
 
+	}
+	
+	@Subscribe
+	public void readInput(ReadInputEvent event){
+		event.setInput(nextInput);
 	}
 }
