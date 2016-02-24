@@ -59,7 +59,7 @@ public class TestOperation {
 		verifierCompte = new Inquiry(atm, session, carte, 456);
 		retrait = new Withdrawal(atm, session, carte, 456);
 		
-		display = new Display(9, 45);
+		display = new Display(atm.getEventBus(), 9, 45);
 		message = new Message(2, carte, 456, 123456, 11111, 22222, argentTotal);
 	}
 	
