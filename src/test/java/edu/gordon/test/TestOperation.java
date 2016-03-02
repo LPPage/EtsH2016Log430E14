@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import edu.gordon.atm.ATM;
@@ -42,7 +43,7 @@ public class TestOperation {
 	private Inquiry verifierCompte;
 	private Withdrawal retrait;
 	private Transaction transaction;
-	
+	private EventBus eventbus;
 	private String nextInput;
 	
 	private Display display;
@@ -62,14 +63,16 @@ public class TestOperation {
 		transfert = new Transfer(atm, session, carte, 456);
 		verifierCompte = new Inquiry(atm, session, carte, 456);
 		retrait = new Withdrawal(atm, session, carte, 456);
-		
-		display = new Display(atm.getEventBus(), 9, 45);
+		eventbus=atm.getEventBus();
+		eventbus.register(this);
+		display = new Display(eventbus, 9, 45);
 		message = new Message(2, carte, 456, 123456, 11111, 22222, argentTotal);
-	}
+			}
 	
 	@Test
 	public void performWithdrawal() throws Cancelled, CardRetained{
 		atm.setCustomerConsole(display);
+		
 		atm.setCashDispenser(new ICashDispenser() {
 			
 			public void setInitialCash(Money initialCash) {}
@@ -144,6 +147,7 @@ public class TestOperation {
 	@Test
 	public void performDeposit() throws Cancelled, CardRetained{
 		atm.setCustomerConsole(display);
+		
 		atm.setCashDispenser(new ICashDispenser() {
 			
 			public void setInitialCash(Money initialCash) {}
@@ -163,7 +167,7 @@ public class TestOperation {
 			testMenu[3]="Balance Inquiry";
 			
 			nextInput="2";
-				
+			System.out.println("HELLO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");	
 		display.readMenuChoice("TestPrompt", testMenu);
 		
 		
