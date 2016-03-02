@@ -167,7 +167,7 @@ public class TestOperation {
 			testMenu[3]="Balance Inquiry";
 			
 			nextInput="2";
-			System.out.println("HELLO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");	
+			
 		display.readMenuChoice("TestPrompt", testMenu);
 		
 		
